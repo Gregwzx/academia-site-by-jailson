@@ -1,13 +1,18 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Planos from "./components/Planos";
 import Modalidades from "./components/Modalidades";
 import DepoimentosFloatings from "./components/DepoimentosFloating";
 import PhotoCarousel from "./components/Galeria";
+import VariableProximity from "./components/VariableProximity"; // Importado
 
 export default function Home() {
+  // CORREÇÃO TS: Definindo o tipo como HTMLDivElement para evitar erro no containerRef
+  const heroRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
+
   const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
@@ -22,6 +27,7 @@ export default function Home() {
     canvas.style.pointerEvents = "none";
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    canvas.style.zIndex = "9999"; // Garante que fique no topo
     document.body.appendChild(canvas);
 
     const ctx = canvas.getContext("2d");
@@ -61,7 +67,9 @@ export default function Home() {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
-      document.body.removeChild(canvas);
+      if (document.body.contains(canvas)) {
+        document.body.removeChild(canvas);
+      }
     };
   }, []);
 
@@ -90,14 +98,26 @@ export default function Home() {
           muted
           className="absolute inset-0 w-full h-full object-cover opacity-30"
         />
+        
+        {/* Adicionei a REF aqui */}
         <motion.div
+          ref={heroRef}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9 }}
-          className="z-10 max-w-3xl mx-auto p-6 text-center"
+          className="z-10 max-w-4xl mx-auto p-6 text-center relative"
         >
-          <h1 className="text-6xl md:text-7xl font-extrabold leading-tight text-blue-600 neon-title">
-            AURA FIT
+          {/* Título com VariableProximity */}
+          <h1 className="text-6xl md:text-7xl font-extrabold leading-tight text-blue-600 neon-title cursor-default">
+            <VariableProximity
+              label="AURA FIT"
+              className="cursor-default tracking-tighter"
+              fromFontVariationSettings="'wght' 800"
+              toFontVariationSettings="'wght' 1000"
+              containerRef={heroRef}
+              radius={200}
+              falloff="linear"
+            />
           </h1>
           <p className="text-white mt-4 text-lg md:text-xl">AURA + EGO</p>
 
@@ -151,7 +171,7 @@ export default function Home() {
       {/* DEPOIMENTOS */}
       <DepoimentosFloatings />
 
-      {/* GALERIA */}
+      {/* GALERIA - MANTIDA INTACTA */}
       <motion.section
         initial="hidden"
         whileInView="visible"
@@ -222,14 +242,28 @@ export default function Home() {
           muted
           className="absolute inset-0 w-full h-full object-cover opacity-30"
         />
+        
+        {/* Adicionei a REF aqui */}
         <motion.div
+          ref={footerRef}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9 }}
-          className="relative z-10 text-center text-white max-w-3xl p-6"
+          className="relative z-10 text-center text-white max-w-4xl p-6"
         >
-          <h2 className="text-5xl md:text-6xl font-extrabold neon-title">
-            VEM FAZER PARTE DA <span className="text-blue-500">AURA</span>
+          <h2 className="text-5xl md:text-6xl font-extrabold neon-title flex flex-col items-center">
+            <span className="block mb-2">VEM FAZER PARTE DA</span>
+            <span className="text-blue-500 block">
+               {/* Título Footer com VariableProximity */}
+               <VariableProximity
+                label="AURA"
+                fromFontVariationSettings="'wght' 800"
+                toFontVariationSettings="'wght' 1000"
+                containerRef={footerRef}
+                radius={150}
+                className="cursor-default"
+              />
+            </span>
           </h2>
           <p className="mt-4 text-xl md:text-2xl">
             Farme aura conosco e se torne{" "}
