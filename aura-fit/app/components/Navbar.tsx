@@ -12,6 +12,14 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    const element = document.querySelector(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <motion.nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
@@ -24,11 +32,46 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden md:flex gap-8 text-white text-sm uppercase font-semibold">
-          <a href="#inicio" className="hover:text-blue-600 transition">Início</a>
-          <a href="#sobre" className="hover:text-blue-600 transition">Sobre</a>
-          <a href="#treinos" className="hover:text-blue-600 transition">Treinos</a>
-          <a href="#planos" className="hover:text-blue-600 transition">Planos</a>
-          <a href="#contato" className="hover:text-blue-600 transition">Contato</a>
+          <a 
+            href="#inicio" 
+            onClick={(e) => scrollToSection(e, '#inicio')}
+            className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
+          >
+            Início
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a 
+            href="#destaques" 
+            onClick={(e) => scrollToSection(e, '#destaques')}
+            className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
+          >
+            Sobre
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a 
+            href="#modalidades" 
+            onClick={(e) => scrollToSection(e, '#modalidades')}
+            className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
+          >
+            Treinos
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a 
+            href="#planos" 
+            onClick={(e) => scrollToSection(e, '#planos')}
+            className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
+          >
+            Planos
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a 
+            href="#contato" 
+            onClick={(e) => scrollToSection(e, '#contato')}
+            className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
+          >
+            Contato
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+          </a>
         </div>
       </div>
     </motion.nav>

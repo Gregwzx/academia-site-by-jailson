@@ -7,68 +7,91 @@ const MouseTrail = () => {
     canvas.style.top = "0";
     canvas.style.left = "0";
     canvas.style.pointerEvents = "none";
+    canvas.style.zIndex = "999999";
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     document.body.appendChild(canvas);
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    type Particle = {
+    interface Point {
       x: number;
       y: number;
-      vx: number;
-      vy: number;
-      alpha: number;
-      length: number;
-    };
+      life: number; // controla iluminação / fade
+    }
 
-    const particles: Particle[] = [];
-    let animationFrameId: number;
+    const points: Point[] = [];
+    const target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const smooth = { x: target.x, y: target.y };
 
-    const animate = () => {
+    const lerp = (a: number, b: number, n: number) => a + (b - a) * n;
+
+    const drawComet = () => {
+      if (points.length < 2) return;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.shadowBlur = 15;
-      ctx.shadowColor = "rgba(26,115,255,0.8)";
 
-      particles.forEach((p, i) => {
-        ctx.strokeStyle = `rgba(26,115,255,${p.alpha})`;
+      for (let i = 0; i < points.length - 1; i++) {
+        const p = points[i];
+        const next = points[i + 1];
+
+        const life = p.life;
+        const width = life * 18; // cauda larga na frente e afinando atrás
+
+        ctx.lineWidth = width;
+        ctx.lineCap = "round";
+
+        // gradiente do cometa
+        const grad = ctx.createLinearGradient(p.x, p.y, next.x, next.y);
+        grad.addColorStop(0, `rgba(0,180,255,${life})`);
+        grad.addColorStop(1, `rgba(0,255,200,${life * 0.6})`);
+
+        ctx.strokeStyle = grad;
+
+        ctx.shadowBlur = 35 * life;
+        ctx.shadowColor = `rgba(0,200,255,${life})`;
+
         ctx.beginPath();
         ctx.moveTo(p.x, p.y);
-        ctx.lineTo(p.x - p.vx * p.length, p.y - p.vy * p.length);
+        ctx.lineTo(next.x, next.y);
         ctx.stroke();
 
-        // pequenas faíscas
-        for (let s = 0; s < 2; s++) {
-          ctx.fillStyle = `rgba(26,115,255,${p.alpha})`;
-          ctx.fillRect(
-            p.x + (Math.random() - 0.5) * 8,
-            p.y + (Math.random() - 0.5) * 8,
-            2,
-            2
-          );
-        }
+        // reduz vida da cauda
+        p.life -= 0.02;
+      }
 
-        // atualização da partícula
-        p.alpha -= 0.02;
-        p.x += p.vx;
-        p.y += p.vy;
+      // remove pontos mortos
+      for (let i = points.length - 1; i >= 0; i--) {
+        if (points[i].life <= 0) points.splice(i, 1);
+      }
+    };
 
-        if (p.alpha <= 0) particles.splice(i, 1);
+    const animate = () => {
+      // mouse suavizado → movimento fluido do cometa
+      smooth.x = lerp(smooth.x, target.x, 0.15);
+      smooth.y = lerp(smooth.y, target.y, 0.15);
+
+      // adiciona nova posição (cabeça do cometa)
+      points.push({
+        x: smooth.x,
+        y: smooth.y,
+        life: 1,
       });
 
-      animationFrameId = requestAnimationFrame(animate);
+      // limita tamanho da cauda
+      if (points.length > 80) points.shift();
+
+      drawComet();
+
+      requestAnimationFrame(animate);
     };
+
     animate();
 
     const handleMouseMove = (e: MouseEvent) => {
-      particles.push({
-        x: e.clientX,
-        y: e.clientY,
-        vx: (Math.random() - 0.5) * 6,
-        vy: (Math.random() - 0.5) * 6,
-        alpha: 1,
-        length: Math.random() * 30 + 20,
-      });
+      target.x = e.clientX;
+      target.y = e.clientY;
     };
 
     const handleResize = () => {
@@ -82,7 +105,6 @@ const MouseTrail = () => {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationFrameId);
       document.body.removeChild(canvas);
     };
   }, []);

@@ -65,10 +65,18 @@ export default function Home() {
     };
   }, []);
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.querySelector(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <div className="home-root">
       {/* HERO */}
       <motion.section
+        id="inicio"
         className="relative h-screen flex items-center justify-center text-center overflow-hidden"
         initial="hidden"
         whileInView="visible"
@@ -94,18 +102,18 @@ export default function Home() {
           <p className="text-white mt-4 text-lg md:text-xl">AURA + EGO</p>
 
           <div className="mt-8 flex justify-center gap-4">
-            <a
-              href="#planos"
-              className="px-6 py-3 rounded-full border border-blue-600 text-blue-600 font-semibold hover:bg-blue-600/10 transition"
+            <button
+              onClick={() => scrollToSection('#planos')}
+              className="px-6 py-3 rounded-full border border-blue-600 text-blue-600 font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-105"
             >
               Matricule-se
-            </a>
-            <a
-              href="#modalidades"
-              className="px-6 py-3 rounded-full border border-blue-600 text-blue-600 font-semibold hover:bg-blue-600/10 transition"
+            </button>
+            <button
+              onClick={() => scrollToSection('#modalidades')}
+              className="px-6 py-3 rounded-full border border-blue-600 text-blue-600 font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-105"
             >
               Ver Modalidades
-            </a>
+            </button>
           </div>
         </motion.div>
       </motion.section>
@@ -160,6 +168,44 @@ export default function Home() {
 
       {/* PLANOS */}
       <Planos />
+
+      {/* SEÇÃO DE CONTATO */}
+      <motion.section
+        id="contato"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeInUp}
+        className="max-w-6xl mx-auto px-6 py-16"
+      >
+        <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-blue-600 rounded-3xl p-8 md:p-12 text-center">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-blue-600 neon-title mb-4">
+            Entre em Contato
+          </h2>
+          <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
+            Estamos prontos para ajudar você a começar sua jornada fitness. 
+            Entre em contato conosco pelo WhatsApp ou visite nossa unidade.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href="https://wa.me/5581998965933"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-600/50"
+            >
+              Falar no WhatsApp
+            </a>
+            <a
+              href="https://www.instagram.com/l1.ferreira/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600/10 font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105"
+            >
+              Seguir no Instagram
+            </a>
+          </div>
+        </div>
+      </motion.section>
 
       {/* BANNER FINAL (VÍDEO) */}
       <motion.section
