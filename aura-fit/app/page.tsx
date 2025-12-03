@@ -183,8 +183,8 @@ export default function Home() {
             Entre em Contato
           </h2>
           <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
-            Estamos prontos para ajudar você a começar sua jornada fitness. 
-            Entre em contato conosco pelo WhatsApp ou visite nossa unidade.
+            Estamos prontos para ajudar você a começar a se tornar um semi-deus. 
+            Entre em contato conosco pelo WhatsApp ou visite nosso instagram.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
