@@ -10,7 +10,6 @@ export default function PhotoCarousel() {
   const fotos = [
     "/photo1.png",
     "/photo2.png",
-    "/'photo3.png",
     "/photo4.png",
     "/photo5.png"
   ];

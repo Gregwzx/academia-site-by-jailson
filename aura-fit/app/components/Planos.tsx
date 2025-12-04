@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
+import LoginModal from "./LoginModal";
 
 interface Plano {
   _id: number;
@@ -15,6 +16,8 @@ interface Plano {
 export default function Planos() {
   const [planos, setPlanos] = useState<Plano[]>([]);
   const [planoSelecionado, setPlanoSelecionado] = useState<Plano | null>(null);
+  const [showLogin, setShowLogin] = useState(false);
+  const [selectedPlanoForLogin, setSelectedPlanoForLogin] = useState<string>("");
 
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -76,45 +79,73 @@ export default function Planos() {
     setPlanoSelecionado(null);
   };
 
+  const handleMatricular = (planoNome: string) => {
+    setSelectedPlanoForLogin(planoNome);
+    setShowLogin(true);
+    fecharModal();
+  };
+
   return (
     <>
       <div id="planos" className="max-w-6xl mx-auto p-6">
-        <h2 className="text-3xl font-bold mb-6 text-blue-600">Planos</h2>
+        <motion.h2 
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl font-bold mb-6 text-blue-600"
+        >
+          Planos
+        </motion.h2>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {planos.map((p) => (
+          {planos.map((p, index) => (
             <motion.div
               key={p._id}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="bg-gray-600 p-6 rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+              transition={{ duration: 0.8, delay: index * 0.1 }}
+              whileHover={{ scale: 1.05, y: -10 }}
+              className="bg-gradient-to-br from-gray-800/80 to-black/90 p-6 rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-blue-600/30 transition-all duration-300 backdrop-blur-sm border border-blue-700/40 relative overflow-hidden group"
             >
-              <h3 className="font-bold text-xl text-white">
-                {p.nome} — R$ {p.preco}
-              </h3>
-              <p className="mt-2 text-white">{p.descricao}</p>
+              {/* Efeito de brilho ao hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-600/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              
+              <div className="relative z-10">
+                <h3 className="font-bold text-xl text-white mb-2">
+                  {p.nome} — <span className="text-blue-500">R$ {p.preco}</span>
+                </h3>
+                <p className="mt-2 text-gray-300">{p.descricao}</p>
 
-              <ul className="mt-3 list-disc ml-5">
-                {(p.beneficios || []).slice(0, 3).map((b, i) => (
-                  <li key={i} className="text-white text-sm">
-                    {b}
-                  </li>
-                ))}
-              </ul>
+                <ul className="mt-3 space-y-2">
+                  {(p.beneficios || []).slice(0, 3).map((b, i) => (
+                    <motion.li 
+                      key={i} 
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="text-white text-sm flex items-start gap-2"
+                    >
+                      <span className="text-blue-500 mt-1">✓</span>
+                      <span>{b}</span>
+                    </motion.li>
+                  ))}
+                </ul>
 
-              <button 
-                onClick={() => abrirModal(p)}
-                className="header-btn mt-4 w-full"
-              >
-                Quero esse
-              </button>
+                <motion.button 
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => abrirModal(p)}
+                  className="header-btn mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:shadow-blue-600/50 transition-all duration-300"
+                >
+                  Quero esse
+                </motion.button>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Modal de detalhes do plano */}
       <AnimatePresence>
         {planoSelecionado && (
           <motion.div
@@ -174,24 +205,34 @@ export default function Planos() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="#contato"
-                  onClick={fecharModal}
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleMatricular(planoSelecionado.nome)}
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-full text-center transition-all duration-300 shadow-lg hover:shadow-blue-600/50"
                 >
                   Matricule-se Agora
-                </a>
-                <button
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={fecharModal}
                   className="flex-1 border-2 border-blue-600 text-blue-600 hover:bg-blue-600/10 font-bold py-4 px-6 rounded-full transition-all duration-300"
                 >
                   Fechar
-                </button>
+                </motion.button>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Modal de Login */}
+      <LoginModal
+        isOpen={showLogin}
+        onClose={() => setShowLogin(false)}
+        selectedPlano={selectedPlanoForLogin}
+      />
     </>
   );
 }
