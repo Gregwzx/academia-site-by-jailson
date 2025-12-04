@@ -13,7 +13,7 @@ export default function Home() {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
   };
-  
+
   return (
     <div className="home-root">
       {/* HERO */}
@@ -102,11 +102,11 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9 }}
-          className="relative z-10 text-center text-white max-w-4xl p-6 space-y-8"
+          className="relative z-10 text-center text-white max-w-4xl p-6 space-y-6"
         >
           {/* Título Principal */}
           <motion.h2 
-            className="text-5xl md:text-7xl font-extrabold neon-title"
+            className="text-4xl md:text-5xl font-extrabold neon-title"
             animate={{ 
               textShadow: [
                 "0 0 20px rgba(26,115,255,0.8)",
@@ -121,7 +121,7 @@ export default function Home() {
 
           {/* Subtítulo */}
           <motion.p 
-            className="text-xl md:text-3xl font-light"
+            className="text-lg md:text-xl font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -132,7 +132,7 @@ export default function Home() {
 
           {/* Texto de Contato */}
           <motion.p 
-            className="text-white text-lg md:text-xl max-w-2xl mx-auto"
+            className="text-white text-base md:text-lg max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
@@ -141,7 +141,7 @@ export default function Home() {
 
           {/* Botões de Contato */}
           <motion.div 
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-4"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
@@ -152,7 +152,7 @@ export default function Home() {
               href="https://wa.me/5581998965933"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 px-10 rounded-full transition-all duration-300 shadow-2xl hover:shadow-blue-600/70 text-lg border-2 border-blue-400"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-2xl hover:shadow-blue-600/70 text-base border-2 border-blue-400"
             >
                Falar no WhatsApp
             </motion.a>
@@ -163,25 +163,14 @@ export default function Home() {
               href="https://www.instagram.com/l1.ferreira/"
               target="_blank"
               rel="noopener noreferrer"
-              className="border-3 border-blue-600 bg-black/50 backdrop-blur-sm text-blue-400 hover:bg-blue-600 hover:text-white font-bold py-5 px-10 rounded-full transition-all duration-300 shadow-2xl text-lg"
+              className="border-3 border-blue-600 bg-black/50 backdrop-blur-sm text-blue-400 hover:bg-blue-600 hover:text-white font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-2xl text-base"
             >
                Seguir no Instagram
             </motion.a>
           </motion.div>
 
-          {/* Badge de Chamada para Ação */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1, type: "spring" }}
-            className="inline-flex items-center gap-2 bg-blue-600/20 backdrop-blur-md border border-blue-500/50 rounded-full px-6 py-3 mt-6"
-          >
-            <span className="text-2xl">⚡</span>
-            <span className="text-blue-300 font-semibold">
-              Matrículas Abertas
-            </span>
+
           </motion.div>
-        </motion.div>
       </motion.section>
     </div>
   );
