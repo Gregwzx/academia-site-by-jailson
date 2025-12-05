@@ -5,7 +5,7 @@ Feito para demonstrar como uma academia pode ter uma presença digital impactant
 
 ---
 
-## 🚀 Tecnologias utilizadas
+## 🚀🚀 Tecnologias utilizadas
 
 **Frontend**
 - ⚛️ React  
