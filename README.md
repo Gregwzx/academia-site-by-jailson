@@ -9,7 +9,7 @@ Feito para demonstrar como uma academia pode ter uma presença digital impactant
 
 **Frontend**
 - ⚛️ React  
-- 💨 TailwindCSS  
+- 💨 TailWindCSS  
 - 🎞️ Framer Motion (animações suaves)
 - 🌀 Swiper.js (carrossel 3D)
 
