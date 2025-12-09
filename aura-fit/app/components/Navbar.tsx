@@ -79,7 +79,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* --- CENTRO: LOGO --- */}
+          {/* --- CENTRO: LOGO (Mantido Intacto) --- */}
           <div className="absolute left-0 right-0 top-0 bottom-0 flex justify-center items-center pointer-events-none z-10">
             <Link href="/" className="group flex flex-col items-center justify-center pointer-events-auto">
               <span className="text-2xl md:text-2xl font-bold text-white tracking-tighter group-hover:scale-105 transition-transform duration-300 drop-shadow-xl">
@@ -97,7 +97,8 @@ export default function Navbar() {
                 className="flex items-center gap-4"
               >
                 <div className="hidden sm:block text-right leading-tight">
-                  <p className="text-white text-arial font-extrabold tracking-wide">{user.name}</p>
+                  {/* Removido 'text-arial', agora usa a fonte padrão */}
+                  <p className="text-white font-extrabold tracking-wide">{user.name}</p>
                   <p className="text-blue-400 text-[10px] uppercase tracking-[0.2em] font-bold">{user.plano || "MEMBRO"}</p>
                 </div>
 
@@ -121,7 +122,7 @@ export default function Navbar() {
                   px-8 py-2.5
                   bg-blue-600/90 hover:bg-blue-500 
                   backdrop-blur-md
-                  text-white font-bold text-arial uppercase tracking-[0.1em]
+                  text-white font-bold uppercase tracking-[0.1em]
                   rounded-full 
                   transition-all duration-300 
                   shadow-[0_0_20px_rgba(37,99,235,0.3)] 
@@ -130,6 +131,7 @@ export default function Navbar() {
                   cursor-pointer relative z-50
                 "
               >
+                {/* Removido 'text-arial', agora usa a fonte padrão */}
                 Entrar
               </motion.button>
             )}
