@@ -97,7 +97,7 @@ export default function Navbar() {
                 className="flex items-center gap-4"
               >
                 <div className="hidden sm:block text-right leading-tight">
-                  <p className="text-white text-sm font-bold tracking-wide">{user.name}</p>
+                  <p className="text-white text-arial font-extrabold tracking-wide">{user.name}</p>
                   <p className="text-blue-400 text-[10px] uppercase tracking-[0.2em] font-bold">{user.plano || "MEMBRO"}</p>
                 </div>
 
@@ -121,7 +121,7 @@ export default function Navbar() {
                   px-8 py-2.5
                   bg-blue-600/90 hover:bg-blue-500 
                   backdrop-blur-md
-                  text-white font-bold text-xs uppercase tracking-[0.1em]
+                  text-white font-bold text-arial uppercase tracking-[0.1em]
                   rounded-full 
                   transition-all duration-300 
                   shadow-[0_0_20px_rgba(37,99,235,0.3)] 
