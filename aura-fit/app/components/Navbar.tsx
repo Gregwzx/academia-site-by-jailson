@@ -3,32 +3,43 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useAuth } from "../components/AuthContext"; // Verifique se o caminho está correto
+import { useAuth } from "../components/AuthContext";
 import { useRouter, usePathname } from "next/navigation";
+import LoginModal from "./LoginModal";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const { user, logout } = useAuth();
   const router = useRouter();
-  const pathname = usePathname(); // Hook para saber em qual página estamos
+  const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    // Se estivermos na Home ("/"), prevenimos o redirecionamento e fazemos scroll suave
+  const navLinks = [
+    { name: "Início", targetId: "#inicio" },
+    { name: "Sobre", targetId: "#destaques" },  
+    { name: "Treinos", targetId: "#modalidades" },
+    { name: "Planos", targetId: "#planos" },
+    { name: "Contato", targetId: "#contato" },
+  ];
+
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     if (pathname === "/") {
       e.preventDefault();
-      const element = document.querySelector(sectionId);
+      const element = document.querySelector(targetId);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const offsetPosition = element.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
       }
     }
-    // Se NÃO estivermos na Home (ex: "/membros"), o Link padrão do Next.js funcionará
-    // e levará o user para a secao"
   };
 
   const handleLogout = () => {
@@ -37,112 +48,100 @@ export default function Navbar() {
   };
 
   return (
-    <motion.nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-black/90 backdrop-blur-lg shadow-md" : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
-        {/* Logo leva sempre para o topo da Home */}
-        <Link href="/" className="text-2xl font-bold text-white">
-          Aura <span className="text-blue-600 neon">Fit</span>
-        </Link>
+    <>
+      <motion.nav
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 border-b border-transparent ${
+          scrolled 
+            ? "bg-black/30 backdrop-blur-md shadow-lg border-white/5" 
+            : "bg-transparent backdrop-blur-[2px]" 
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative">
+          
+          {/* --- ESQUERDA: Links de Navegação --- */}
+          <div className="hidden md:flex items-center gap-8 flex-1 justify-start z-20">
+            {navLinks.map((item) => (
+              <Link 
+                key={item.name}
+                href={item.targetId === "#inicio" ? "/" : `/${item.targetId}`}
+                onClick={(e) => handleNavigation(e, item.targetId)}
+                className="
+                  text-sm font-semibold uppercase tracking-[0.15em] 
+                  text-gray-300 hover:text-white 
+                  transition-all duration-300 relative group
+                  hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]
+                "
+              >
+                {item.name}
+                {/* Linha azul neon animada embaixo */}
+                <span className="absolute -bottom-2 left-1/2 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full group-hover:left-0 shadow-[0_0_10px_#3b82f6]" />
+              </Link>
+            ))}
+          </div>
 
-        {/* Links de Navegação */}
-        <div className="hidden md:flex gap-8 text-white text-sm uppercase font-semibold">
-          <Link 
-            href="/" 
-            onClick={(e) => handleNavigation(e, '#inicio')}
-            className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
-          >
-            Início
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          
-          <Link 
-            href="/#destaques" 
-            onClick={(e) => handleNavigation(e, '#destaques')}
-            className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
-          >
-            Sobre
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          
-          <Link 
-            href="/#modalidades" 
-            onClick={(e) => handleNavigation(e, '#modalidades')}
-            className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
-          >
-            Treinos
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          
-          <Link 
-            href="/#planos" 
-            onClick={(e) => handleNavigation(e, '#planos')}
-            className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
-          >
-            Planos
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          
-          <Link 
-            href="/#contato" 
-            onClick={(e) => handleNavigation(e, '#contato')}
-            className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
-          >
-            Contato
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-        </div>
+          {/* --- CENTRO: LOGO --- */}
+          <div className="absolute left-0 right-0 top-0 bottom-0 flex justify-center items-center pointer-events-none z-10">
+            <Link href="/" className="group flex flex-col items-center justify-center pointer-events-auto">
+              <span className="text-2xl md:text-2xl font-bold text-white tracking-tighter group-hover:scale-105 transition-transform duration-300 drop-shadow-xl">
+                AURA <span className="text-blue-600 neon-title drop-shadow-[0_0_15px_rgba(37,99,235,0.9)]">FIT</span>
+              </span>
+            </Link>
+          </div>
 
-        {/* Área do Usuário */}
-        <div className="flex items-center gap-4">
-          {user ? (
-            <>
-              <motion.div
+          {/* --- DIREITA: Área do Usuário / Login --- */}
+          <div className="flex items-center gap-4 flex-1 justify-end z-20">
+            {user ? (
+              <motion.div 
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="hidden md:flex items-center gap-3"
+                className="flex items-center gap-4"
               >
-                <div className="text-right">
-                  <p className="text-white text-sm font-bold">{user.name}</p>
-                  <p className="text-blue-500 text-xs">{user.plano}</p>
+                <div className="hidden sm:block text-right leading-tight">
+                  <p className="text-white text-sm font-bold tracking-wide">{user.name}</p>
+                  <p className="text-blue-400 text-[10px] uppercase tracking-[0.2em] font-bold">{user.plano || "MEMBRO"}</p>
                 </div>
-                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-900 rounded-full flex items-center justify-center text-white font-bold shadow-[0_0_15px_rgba(37,99,235,0.4)] border border-blue-400/30">
                   {user.name[0].toUpperCase()}
                 </div>
-              </motion.div>
-              
-              {/* Botão Meus Treinos (só aparece se não estiver na página de membros) */}
-              {pathname !== "/membros" && (
-                 <motion.button
-                   whileHover={{ scale: 1.05 }}
-                   whileTap={{ scale: 0.95 }}
-                   onClick={() => router.push("/membros")}
-                   className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold transition-all hidden md:block"
-                 >
-                   Meus Treinos
-                 </motion.button>
-              )}
 
-              <motion.button
+                <button
+                  onClick={handleLogout}
+                  className="text-gray-400 hover:text-red-500 transition-colors text-xs font-bold uppercase tracking-widest border border-transparent hover:border-red-500/30 px-3 py-1 rounded-full"
+                >
+                  Sair
+                </button>
+              </motion.div>
+            ) : (
+              <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={handleLogout}
-                className="px-4 py-2 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white rounded-full font-semibold transition-all"
+                onClick={() => setIsLoginOpen(true)}
+                className="
+                  px-8 py-2.5
+                  bg-blue-600/90 hover:bg-blue-500 
+                  backdrop-blur-md
+                  text-white font-bold text-xs uppercase tracking-[0.1em]
+                  rounded-full 
+                  transition-all duration-300 
+                  shadow-[0_0_20px_rgba(37,99,235,0.3)] 
+                  hover:shadow-[0_0_35px_rgba(37,99,235,0.6)] 
+                  border border-blue-400/30
+                  cursor-pointer relative z-50
+                "
               >
-                Sair
+                Entrar
               </motion.button>
-            </>
-          ) : (
-            // Opcional: Adicionar botão de Login se não estiver logado
-            <Link href="/login" className="px-4 py-2 text-white hover:text-blue-400 font-semibold transition-all">
-                Login
-            </Link>
-          )}
+            )}
+          </div>
+
         </div>
-      </div>
-    </motion.nav>
+      </motion.nav>
+
+      <LoginModal 
+        isOpen={isLoginOpen} 
+        onClose={() => setIsLoginOpen(false)} 
+      />
+    </>
   );
 }
