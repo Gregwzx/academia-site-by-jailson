@@ -39,7 +39,7 @@ export default function HeroSection() {
           <h1 className="text-6xl md:text-7xl font-extrabold leading-tight text-blue-600 neon-title">
             AURA FIT
           </h1>
-          <p className="text-white mt-4 text-lg md:text-xl">AURA + EGO</p>
+          <p className="text-white mt-4 text-lg md:text-xl">VENHA SE TORNAR LENDÁRIO</p>
 
           <div className="mt-8 flex justify-center gap-4 flex-wrap">
             <motion.button
