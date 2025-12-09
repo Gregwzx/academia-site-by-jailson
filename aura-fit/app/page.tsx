@@ -1,12 +1,31 @@
 "use client";
 
-import { motion, Variants } from "framer-motion";
+import { motion, useScroll, useSpring, Variants } from "framer-motion";
 import { useEffect } from "react";
+
+// Seus componentes (verifique se os caminhos estão corretos)
 import Planos from "./components/Planos";
 import Modalidades from "./components/Modalidades";
 import DepoimentosFloatings from "./components/DepoimentosFloating";
 import PhotoCarousel from "./components/Galeria";
 import HeroSection from "./components/HeroSection";
+
+// --- Componente da Barra de Progresso ---
+const ScrollProgress = () => {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  return (
+    <motion.div
+      className="fixed top-0 left-0 right-0 h-1 bg-blue-500 origin-left z-50 neon-shadow"
+      style={{ scaleX }}
+    />
+  );
+};
 
 export default function Home() {
   const fadeInUp: Variants = {
@@ -15,7 +34,10 @@ export default function Home() {
   };
 
   return (
-    <div className="home-root">
+    <div className="home-root relative">
+      {/* 1. ADICIONADO: A barra de progresso aqui no topo */}
+      <ScrollProgress />
+
       {/* HERO */}
       <HeroSection />
 
@@ -78,7 +100,7 @@ export default function Home() {
       {/* PLANOS */}
       <Planos />
 
-      {/* BANNER "VEM FAZER PARTE DA AURA" COM BOTÕES DE CONTATO */}
+      {/* BANNER "VEM FAZER PARTE DA AURA" */}
       <motion.section
         id="contato"
         className="relative h-[70vh] md:h-[85vh] flex items-center justify-center text-center overflow-hidden"
@@ -95,7 +117,7 @@ export default function Home() {
           className="absolute inset-0 w-full h-full object-cover opacity-30"
         />
         
-        {/* Overlay escuro para melhor contraste */}
+        {/* Overlay escuro */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
 
         <motion.div
@@ -130,7 +152,6 @@ export default function Home() {
             <span className="text-blue-500 neon-title font-bold">lendário</span>!
           </motion.p>
 
-          {/* Texto de Contato */}
           <motion.p 
             className="text-white text-base md:text-lg max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
@@ -169,8 +190,7 @@ export default function Home() {
             </motion.a>
           </motion.div>
 
-
-          </motion.div>
+        </motion.div>
       </motion.section>
     </div>
   );

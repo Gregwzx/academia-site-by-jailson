@@ -18,7 +18,7 @@ export default function EscolhasSaudaveis() {
         </h2>
 
         <p className="text-white text-lg max-w-xl">
-          Na Aura Fit, cada treino é planejado para formar sua aura. Nosso
+          Na Aura Fit, cada treino é planejado para te deixar em outro nível. Nosso
           foco é garantir sua energia e bem-estar — com programas personalizados,
           equipamentos modernos e acompanhamento de profissionais qualificados.
         </p>

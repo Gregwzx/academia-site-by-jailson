@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useAuth } from "./AuthContext";
-import { useRouter } from "next/navigation";
+import { useAuth } from "../components/AuthContext"; // Verifique se o caminho está correto
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const { user, logout } = useAuth();
   const router = useRouter();
+  const pathname = usePathname(); // Hook para saber em qual página estamos
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -17,12 +18,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    e.preventDefault();
-    const element = document.querySelector(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    // Se estivermos na Home ("/"), prevenimos o redirecionamento e fazemos scroll suave
+    if (pathname === "/") {
+      e.preventDefault();
+      const element = document.querySelector(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
+    // Se NÃO estivermos na Home (ex: "/membros"), o Link padrão do Next.js funcionará
+    // e levará o user para a secao"
   };
 
   const handleLogout = () => {
@@ -37,53 +43,60 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
+        {/* Logo leva sempre para o topo da Home */}
         <Link href="/" className="text-2xl font-bold text-white">
           Aura <span className="text-blue-600 neon">Fit</span>
         </Link>
 
+        {/* Links de Navegação */}
         <div className="hidden md:flex gap-8 text-white text-sm uppercase font-semibold">
-          <a 
-            href="#inicio" 
-            onClick={(e) => scrollToSection(e, '#inicio')}
+          <Link 
+            href="/" 
+            onClick={(e) => handleNavigation(e, '#inicio')}
             className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
           >
             Início
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a 
-            href="#destaques" 
-            onClick={(e) => scrollToSection(e, '#destaques')}
+          </Link>
+          
+          <Link 
+            href="/#destaques" 
+            onClick={(e) => handleNavigation(e, '#destaques')}
             className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
           >
             Sobre
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a 
-            href="#modalidades" 
-            onClick={(e) => scrollToSection(e, '#modalidades')}
+          </Link>
+          
+          <Link 
+            href="/#modalidades" 
+            onClick={(e) => handleNavigation(e, '#modalidades')}
             className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
           >
             Treinos
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a 
-            href="#planos" 
-            onClick={(e) => scrollToSection(e, '#planos')}
+          </Link>
+          
+          <Link 
+            href="/#planos" 
+            onClick={(e) => handleNavigation(e, '#planos')}
             className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
           >
             Planos
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a 
-            href="#contato" 
-            onClick={(e) => scrollToSection(e, '#contato')}
+          </Link>
+          
+          <Link 
+            href="/#contato" 
+            onClick={(e) => handleNavigation(e, '#contato')}
             className="hover:text-blue-600 transition-all duration-300 cursor-pointer relative group"
           >
             Contato
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-          </a>
+          </Link>
         </div>
 
+        {/* Área do Usuário */}
         <div className="flex items-center gap-4">
           {user ? (
             <>
@@ -100,14 +113,19 @@ export default function Navbar() {
                   {user.name[0].toUpperCase()}
                 </div>
               </motion.div>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => router.push("/membros")}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold transition-all"
-              >
-                Meus Treinos
-              </motion.button>
+              
+              {/* Botão Meus Treinos (só aparece se não estiver na página de membros) */}
+              {pathname !== "/membros" && (
+                 <motion.button
+                   whileHover={{ scale: 1.05 }}
+                   whileTap={{ scale: 0.95 }}
+                   onClick={() => router.push("/membros")}
+                   className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold transition-all hidden md:block"
+                 >
+                   Meus Treinos
+                 </motion.button>
+              )}
+
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -117,7 +135,12 @@ export default function Navbar() {
                 Sair
               </motion.button>
             </>
-          ) : null}
+          ) : (
+            // Opcional: Adicionar botão de Login se não estiver logado
+            <Link href="/login" className="px-4 py-2 text-white hover:text-blue-400 font-semibold transition-all">
+                Login
+            </Link>
+          )}
         </div>
       </div>
     </motion.nav>
