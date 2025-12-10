@@ -4,7 +4,6 @@ import { motion, useScroll, useSpring, Variants } from "framer-motion";
 import { useEffect } from "react";
 import { CheckCircle } from "lucide-react";
 
-// Seus componentes
 import Planos from "./components/Planos";
 import Modalidades from "./components/Modalidades";
 import DepoimentosFloatings from "./components/DepoimentosFloating";
@@ -32,7 +31,7 @@ const benefits = [
 
 // --- COMPONENTES AUXILIARES ---
 
-// 1. Componente StatCard (Com novos efeitos Neon e Hover)
+// 1. Componente StatCard 
 const StatCard = ({ value, label, delay }: { value: string; label: string; delay: number }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0.5, y: 20 }}
@@ -45,7 +44,7 @@ const StatCard = ({ value, label, delay }: { value: string; label: string; delay
       boxShadow: "0 0 20px rgba(59, 130, 246, 0.4)",
       borderColor: "rgba(59, 130, 246, 0.6)"
     }}
-    className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-gray-900/80 to-black backdrop-blur-md rounded-2xl border border-gray-800 transition-all duration-300 group cursor-default"
+    className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-gray-900/80 to-black backdrop-blur-md rounded-2xl border border-gray-800 transition-all duration-500 group cursor-default"
   >
     <h3 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 mb-2 drop-shadow-lg">
       {value}
@@ -74,7 +73,7 @@ const BenefitCard = ({ title, description }: { title: string; description: strin
   </motion.div>
 );
 
-// --- Componente da Barra de Progresso ---
+// --- Barra de Progresso ---
 const ScrollProgress = () => {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -101,13 +100,13 @@ export default function Home() {
     },
   };
 
-  // Variante para container dos benefícios (efeito cascata)
+  // container dos benefícios
   const containerStagger: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2 // Cada filho aparece 0.2s depois do anterior
+        staggerChildren: 0.2 
       }
     }
   };
@@ -122,15 +121,14 @@ export default function Home() {
 
       {/* ESTATÍSTICAS */}
       <section className="py-16 sm:py-20 px-4 bg-gradient-to-b from-black via-gray-900/20 to-black relative overflow-hidden">
-        {/* Adicionei um brilho de fundo sutil */}
         <div className="absolute inset-0 bg-blue-600/5 blur-[120px] pointer-events-none" />
         
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-12">
-            <StatCard value="500+" label="Alunos Ativos" delay={0.1} />
-            <StatCard value="15+" label="Modalidades" delay={0.2} />
-            <StatCard value="98%" label="Satisfação" delay={0.3} />
-            <StatCard value="24/7" label="Acesso VIP" delay={0.4} />
+            <StatCard value="500+" label="Semi-deuses" delay={0.01} />
+            <StatCard value="3+" label="Modalidades" delay={0.02} />
+            <StatCard value="99%" label="Satisfação" delay={0.03} />
+            <StatCard value="24/7" label="Acesso VIP" delay={0.04} />
           </div>
         </div>
       </section>
