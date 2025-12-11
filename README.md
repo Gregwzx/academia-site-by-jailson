@@ -14,20 +14,20 @@ Feito para evidenciar como uma presença digital bem estruturada pode transforma
 - 🌀 Swiper.js (Carrossel 3D)
 
 **Backend**
-- 🟢 Node.js  
-- 🌐 Express  
+- 🌐 Node.js  
+- 🟢Express  
 
 ---
 
 ## 💻 Funcionalidades principais
 
-✅ **Hero Section** — Tela inicial fullscreen com texto motivacional e botões animados  
-✅ **Por que escolher a UNDERGYM** — Seção de destaque com gradiente cinematográfico  
-✅ **Planos** — Cards com hover neon e efeito laser  
-✅ **Modalidades** — Três colunas verticais com imagens e overlay degradê  
-✅ **Galeria** — Carrossel 3D com fotos da academia  
-✅ **Depoimentos** — Carrossel com prints de comentários reais do Instagram  
-✅ **Contato** — Botão fixo do WhatsApp e rodapé personalizado  
+✅ **Hero Section** — Tela inicial fullscreen com texto motivacional e botões animados.
+✅ **Por que escolher a UNDERGYM** — Seção de destaque com gradiente cinematográfico.  
+✅ **Planos** — Cards com hover neon e efeito laser.
+✅ **Modalidades** — Três colunas verticais com imagens e overlay degradê.  
+✅ **Galeria** — Carrossel 3D com fotos da academia.  
+✅ **Depoimentos** — Carrossel com prints de comentários reais do Instagram. 
+✅ **Contato** — Botão fixo do WhatsApp e rodapé personalizado.  
 
 ---
 
