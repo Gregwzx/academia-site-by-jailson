@@ -1,7 +1,7 @@
 # 🏋️‍♂️ Aura fit — Site de Academia totalmente responsivo
 
 Um site moderno, responsivo e dinâmico desenvolvido em **React + TailwindCSS**, com estilo inspirado em academias reais como Ironberg.  
-Feito para demonstrar como uma academia pode ter uma presença digital impactante e profissional.
+Feito para evidenciar como uma presença digital bem estruturada pode transformar a imagem e a comunicação de uma academia.
 
 ---
 
@@ -10,8 +10,8 @@ Feito para demonstrar como uma academia pode ter uma presença digital impactant
 **Frontend**
 - ⚛️ React  
 - 💨 TailwindCSS  
-- 🎞️ Framer Motion (animações suaves)
-- 🌀 Swiper.js (carrossel 3D)
+- 🎞️ Framer Motion (Animações suaves)
+- 🌀 Swiper.js (Carrossel 3D)
 
 **Backend**
 - 🟢 Node.js  
@@ -21,13 +21,13 @@ Feito para demonstrar como uma academia pode ter uma presença digital impactant
 
 ## 💻 Funcionalidades principais
 
-✅ **Hero Section** — tela inicial fullscreen com texto motivacional e botões animados  
-✅ **Por que escolher a UNDERGYM** — seção de destaque com gradiente cinematográfico  
-✅ **Planos** — cards com hover neon e efeito laser  
-✅ **Modalidades** — três colunas verticais com imagens e overlay degradê  
-✅ **Galeria** — carrossel 3D com fotos da academia  
-✅ **Depoimentos** — carrossel com prints de comentários reais do Instagram  
-✅ **Contato** — botão fixo do WhatsApp e rodapé personalizado  
+✅ **Hero Section** — Tela inicial fullscreen com texto motivacional e botões animados  
+✅ **Por que escolher a UNDERGYM** — Seção de destaque com gradiente cinematográfico  
+✅ **Planos** — Cards com hover neon e efeito laser  
+✅ **Modalidades** — Três colunas verticais com imagens e overlay degradê  
+✅ **Galeria** — Carrossel 3D com fotos da academia  
+✅ **Depoimentos** — Carrossel com prints de comentários reais do Instagram  
+✅ **Contato** — Botão fixo do WhatsApp e rodapé personalizado  
 
 ---
 
