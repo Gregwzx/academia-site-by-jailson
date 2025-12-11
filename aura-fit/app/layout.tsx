@@ -5,7 +5,7 @@ import { AuthProvider } from "./components/AuthContext";
 
 export const metadata = {
   title: "Aura Fit Academia",
-  description: "Aura + Ego — Farme sua aura conosco!",
+  description: "Transformamos esforço em resultado. Aqui, cada treino aproxima você da sua melhor versão",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
