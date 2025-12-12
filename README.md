@@ -1,95 +1,35 @@
-# 🏋️‍♂️ Aura fit — Site de Academia totalmente responsivo
+# AuraFit – Website ✨
 
-Um site moderno, responsivo e dinâmico desenvolvido em **React + TailwindCSS**, com estilo inspirado em academias reais como Ironberg.  
-Feito para evidenciar como uma presença digital bem estruturada pode transformar a imagem e a comunicação de uma academia.
+Projeto desenvolvido em **Next.js 16+** com **React**, **TailwindCSS**, **Framer Motion** e **Lucide React**.  
+Site moderno, rápido, responsivo e cheio de efeitos visuais para apresentar os planos, modalidades e estrutura da AuraFit.
 
----
+## 🚀 Tecnologias Utilizadas
 
-## 🚀 Tecnologias utilizadas
+- Next.js 16+
+- React 18+
+- Tailwind CSS
+- Framer Motion
+- Lucide React
+- Hooks personalizados
+- Context API
+- ShadCN/UI (se aplicado)
 
-**Frontend**
-- ⚛️ React  
-- 💨 TailwindCSS  
-- 🎞️ Framer Motion (Animações suaves)
-- 🌀 Swiper.js (Carrossel 3D)
+## 🎯 Objetivo
 
-**Backend**
-- 🌐 Node.js  
-- 🟢Express  
+Construir um site em react para o projeto da matéria de **Front-end Frameworks**:
 
----
+- Página inicial animada
+- Página de usúario
+- Planos e modalidades
+- Navbar com efeito de scroll
+- Animações fluidas (motion, fade, stagger)
+- Visual limpo e responsivo
+- Código organizado seguindo boas práticas
 
-## 💻 Funcionalidades principais
+## 📦 Instalação e Execução
 
-✅ **Hero Section** — Tela inicial fullscreen com texto motivacional e botões animados.
-✅ **Por que escolher a UNDERGYM** — Seção de destaque com gradiente cinematográfico.  
-✅ **Planos** — Cards com hover neon e efeito laser.
-✅ **Modalidades** — Três colunas verticais com imagens e overlay degradê.  
-✅ **Galeria** — Carrossel 3D com fotos da academia.  
-✅ **Depoimentos** — Carrossel com prints de comentários reais do Instagram. 
-✅ **Contato** — Botão fixo do WhatsApp e rodapé personalizado.  
-
----
-
-## 🧭 Estrutura do projeto
-
-```
-undergym-fullstack/
-├── client/              # Frontend em React
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   └── assets/
-│   └── package.json
-│
-├── server/              # Backend em Node/Express
-│   ├── server.js
-│   └── package.json
-│
-├── README.md
-└── ...
-```
-
----
-
-## ⚙️ Como rodar o projeto
-
-### 🔹 Frontend
 ```bash
-cd client
+git clone https://github.com/Gregwzx/academia-site-by-jailson.git
+cd aura-fit
 npm install
 npm run dev
-```
-Acesse: [http://localhost:5173](http://localhost:5173)
-
-### 🔹 Backend
-```bash
-cd server
-npm install
-node server.js
-```
-
----
-
-## 🌐 Deploy (opcional)
-Você pode hospedar o frontend na **Vercel**, **Netlify** ou **GitHub Pages**,  
-e o backend na **Render**, **Railway** ou **Fly.io**.
-
----
-
-## 📸 Preview
-![Preview do site](./client/src/assets/preview.jpg)
-
----
-
-## 👨‍💻 Autor
-
-**Jailson Ferreira (Greg)**  
-💼 [GitHub](https://github.com/Gregwzx)  
-💬 [LinkedIn](https://www.linkedin.com/in/jailson-ferreira/)  
-📧 Contato: *(adicione seu e-mail aqui)*
-
----
-
-> “Força não é o quanto você levanta — é o quanto você suporta.”  
-> **UNDERGYM — Treine forte, evolua sempre.**
